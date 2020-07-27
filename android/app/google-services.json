@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "855591693601",
+    "firebase_url": "https://carros-3d6e9.firebaseio.com",
+    "project_id": "carros-3d6e9",
+    "storage_bucket": "carros-3d6e9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855591693601:android:92b558386787756e63a260",
+        "android_client_info": {
+          "package_name": "com.example.foroexotics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855591693601-5ot2c011hlvujjr7cvm9c0hulielq85e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMkNf8we6uDLlHTAKne0KFI4oiSW-p7uU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855591693601-5ot2c011hlvujjr7cvm9c0hulielq85e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
