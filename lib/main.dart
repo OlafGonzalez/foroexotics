@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'agregarCarro.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,42 +21,37 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       home: Scaffold(
-          appBar: AppBar(
-            title: Text("Foro"),
+        appBar: AppBar(
+          title: Text("Foro"),
+        ),
+        body: Center(
+          child: ListView(
+            children: <Widget>[
+              
+            ],
           ),
-          body: isSignIn
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(_user.photoUrl),
-                      ),
-                      Text(_user.displayName),
-                      OutlineButton(
-                        onPressed: () {
-                          googleSignout();
-                        },
-                        child: Text("Logout"),
-                      )
-                    ],
-                  ),
-                )
-              : Center(
-                  child: OutlineButton(
-                    onPressed: () {
-                      handleSignIn();
-                    },
-                    child: Text("SignIn with Goolge"),
-                  ),
-                )),
+        ),
+        floatingActionButton: StreamBuilder<Object>(
+            stream: null,
+            builder: (context, snapshot) {
+              return FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AgregarCarro()),
+                  );
+                },
+                child: Icon(Icons.add),
+              );
+            }),
+      ),
     );
   }
 
- bool isSignIn = false;
+  bool isSignIn = false;
 
   Future<void> handleSignIn() async {
     GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
