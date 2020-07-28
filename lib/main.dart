@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'agregarCarro.dart';
 import 'Carpost.dart';
+import 'carinfo.dart';
 
 void main() {
   runApp(MyApp());
@@ -111,7 +112,13 @@ class _MyAppState extends State<MyApp> {
                             carpostList[index].modelo,
                             carpostList[index].imagen,
                             carpostList[index].date,
-                            carpostList[index].time);
+                            carpostList[index].time,
+                            carpostList[index].autoproducidos,
+                            carpostList[index].precioActual,
+                            carpostList[index].precioSalida,
+                            carpostList[index].year,
+                            carpostList[index].numeroAuto
+                            );
                       },
                     ),
                   )
@@ -143,7 +150,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget postUI(
-      String marca, String modelo, String image, String date, String time) {
+      String marca, String modelo, String image, String date, String time,String autosproducidos,String precioActual,String precioSalida,String year,String numeroAuto) {
     return Card(
       elevation: 14.0,
       color: Colors.grey,
@@ -166,7 +173,32 @@ class _MyAppState extends State<MyApp> {
                 ),
                 Text(marca),
                 Text(modelo),
-                RaisedButton(child: Text("info"), onPressed: () {}),
+                StreamBuilder<Object>(
+                  stream: null,
+                  builder: (context, snapshot) {
+                    return RaisedButton(
+                      child: Text("info"), 
+                      onPressed: () {
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (context) =>Carinfo(
+                            marcaEnvio: marca,
+                            modeloEnvio: modelo,
+                            yearEnvio: year,
+                            autosproducidosEnvio: autosproducidos,
+                            precioActualEnvio: precioActual,
+                            precioSalidaEnvio: precioSalida,
+                            dateEnvio: date,
+                            timeEnvio: time,
+                            imagenEnvio: image,
+                            numeroAutoEnvio: numeroAuto,
+                          )
+                          )
+                          );
+
+                    });
+                  }
+                ),
               ],
             )
           ],
