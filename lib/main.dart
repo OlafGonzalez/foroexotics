@@ -35,6 +35,7 @@ class _MyAppState extends State<MyApp> {
 
       for (var individualKey in keys) {
         CarPost posts = CarPost(
+          individualKey,
           data[individualKey]['modelo'],
           data[individualKey]['marca'],
           data[individualKey]['image'],
@@ -108,6 +109,7 @@ class _MyAppState extends State<MyApp> {
                       itemCount: carpostList.length,
                       itemBuilder: (_, index) {
                         return postUI(
+                            carpostList[index].keyPost,
                             carpostList[index].marca,
                             carpostList[index].modelo,
                             carpostList[index].imagen,
@@ -150,7 +152,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget postUI(
-      String marca, String modelo, String image, String date, String time,String autosproducidos,String precioActual,String precioSalida,String year,String numeroAuto) {
+      String keyPost,String marca, String modelo, String image, String date, String time,String autosproducidos,String precioActual,String precioSalida,String year,String numeroAuto) {
     return Card(
       elevation: 14.0,
       color: Colors.grey,
@@ -172,7 +174,7 @@ class _MyAppState extends State<MyApp> {
                   fit: BoxFit.cover,
                 ),
                 Text(marca),
-                Text(modelo),
+                Text(keyPost),
                 StreamBuilder<Object>(
                   stream: null,
                   builder: (context, snapshot) {
@@ -182,6 +184,7 @@ class _MyAppState extends State<MyApp> {
                         Navigator.push(
                           context, 
                           MaterialPageRoute(builder: (context) =>Carinfo(
+                            keyPostEnvio: keyPost,
                             marcaEnvio: marca,
                             modeloEnvio: modelo,
                             yearEnvio: year,

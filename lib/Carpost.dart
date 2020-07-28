@@ -1,5 +1,6 @@
 class CarPost{
   String 
+  keyPost,
   modelo,
   marca,
   imagen,
@@ -11,6 +12,7 @@ class CarPost{
   time,
   date;
   CarPost(
+  this.keyPost,
   this.modelo,
   this.marca,
   this.imagen,
