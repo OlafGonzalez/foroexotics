@@ -22,12 +22,18 @@ class _AgregarCarroState extends State<AgregarCarro> {
         padding: EdgeInsets.all(10),
         children: <Widget>[
           Form(
+            key: formkey,
             child: Center(
               child: Column(
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    validator: (value){
+                      if(value.isEmpty){
+                        return "Ingrese el modelo";
+                      }
+                    },
                     decoration: InputDecoration(
                         hintText: "Modelo",
                         prefixIcon: Icon(Icons.card_travel),
@@ -39,6 +45,11 @@ class _AgregarCarroState extends State<AgregarCarro> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    validator: (value){
+                      if(value.isEmpty){
+                        return "Ingrese la marca";
+                      }
+                    },
                     decoration: InputDecoration(
                         hintText: "Marca",
                         prefixIcon: Icon(Icons.card_travel),
@@ -49,6 +60,11 @@ class _AgregarCarroState extends State<AgregarCarro> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    validator: (value){
+                      if(value.isEmpty){
+                        return "Ingrese el ano";
+                      }
+                    },
                     decoration: InputDecoration(
                         hintText: "Ano",
                         prefixIcon: Icon(Icons.card_travel),
@@ -59,6 +75,11 @@ class _AgregarCarroState extends State<AgregarCarro> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    validator: (value){
+                      if(value.isEmpty){
+                        return "Ingrese el numero de autos producidos";
+                      }
+                    },
                     decoration: InputDecoration(
                         hintText: "Autos producidos",
                         prefixIcon: Icon(Icons.card_travel),
@@ -69,6 +90,11 @@ class _AgregarCarroState extends State<AgregarCarro> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    validator: (value){
+                      if(value.isEmpty){
+                        return "Ingrese el numero del auto";
+                      }
+                    },
                     decoration: InputDecoration(
                         hintText: "Numero de auto",
                         prefixIcon: Icon(Icons.card_travel),
@@ -79,6 +105,11 @@ class _AgregarCarroState extends State<AgregarCarro> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    validator: (value){
+                      if(value.isEmpty){
+                        return "Ingrese el precio de salida";
+                      }
+                    },
                     decoration: InputDecoration(
                         hintText: "Precio de salida",
                         prefixIcon: Icon(Icons.card_travel),
@@ -89,6 +120,11 @@ class _AgregarCarroState extends State<AgregarCarro> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    validator: (value){
+                      if(value.isEmpty){
+                        return "Ingrese el precio actual";
+                      }
+                    },
                     decoration: InputDecoration(
                         hintText: "Precio actual",
                         prefixIcon: Icon(Icons.card_travel),
@@ -121,7 +157,9 @@ class _AgregarCarroState extends State<AgregarCarro> {
                       child: RaisedButton(
                         child: Text("Add"),
                         onPressed: (){
-
+                          if(formkey.currentState.validate()){
+                            
+                          }
                       }),
                     )
                   ],
@@ -135,6 +173,10 @@ class _AgregarCarroState extends State<AgregarCarro> {
         ],
       )),
     );
+  }
+
+  void uploadImageFireStore() async{
+
   }
 
   Widget enableUpload(){
