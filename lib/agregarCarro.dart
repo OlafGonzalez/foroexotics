@@ -1,6 +1,10 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:intl/intl.dart';
+
 
 class AgregarCarro extends StatefulWidget {
   @override
@@ -9,6 +13,7 @@ class AgregarCarro extends StatefulWidget {
 
 class _AgregarCarroState extends State<AgregarCarro> {
   File sampleImage;
+  String modelo,marca,year,autoP,numeroA,psalida,pactual,url;
   final formkey = GlobalKey<FormState>();
 
   @override
@@ -29,6 +34,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    onSaved: (value) => modelo = value,
                     validator: (value){
                       if(value.isEmpty){
                         return "Ingrese el modelo";
@@ -45,6 +51,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    onSaved: (value) => marca = value,
                     validator: (value){
                       if(value.isEmpty){
                         return "Ingrese la marca";
@@ -60,6 +67,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    onSaved: (value) => year = value,
                     validator: (value){
                       if(value.isEmpty){
                         return "Ingrese el ano";
@@ -75,6 +83,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    onSaved: (value) => autoP = value,
                     validator: (value){
                       if(value.isEmpty){
                         return "Ingrese el numero de autos producidos";
@@ -90,6 +99,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    onSaved: (value) => numeroA = value,
                     validator: (value){
                       if(value.isEmpty){
                         return "Ingrese el numero del auto";
@@ -105,6 +115,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    onSaved: (value) => psalida = value,
                     validator: (value){
                       if(value.isEmpty){
                         return "Ingrese el precio de salida";
@@ -120,6 +131,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    onSaved: (value) => pactual = value,
                     validator: (value){
                       if(value.isEmpty){
                         return "Ingrese el precio actual";
@@ -157,9 +169,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                       child: RaisedButton(
                         child: Text("Add"),
                         onPressed: (){
-                          if(formkey.currentState.validate()){
-                            
-                          }
+                          uploadStatusImage();
                       }),
                     )
                   ],
@@ -173,6 +183,56 @@ class _AgregarCarroState extends State<AgregarCarro> {
         ],
       )),
     );
+  }
+
+  void uploadStatusImage() async {
+    if(validateandSave()){
+      //subir a firestorage
+      final StorageReference postImage = FirebaseStorage.instance.ref().child("Autos photos");
+      var timekey = DateTime.now();
+      final StorageUploadTask uploadTask = postImage.child(timekey.toString() + ".jpg").putFile(sampleImage);
+      var imageURL = await (await uploadTask.onComplete).ref.getDownloadURL();
+      url = imageURL.toString();
+      print("URL image: " + url);
+
+      saveToDatabase(url);
+      Navigator.pop(context);
+
+    }
+  }
+  void saveToDatabase(String url){
+    var dbTimerKey = DateTime.now();
+    var formatDate = DateFormat('MMM d, yyyy');
+    var formatTime = DateFormat('EEEE, hh:mm aaa');
+
+    String date = formatDate.format(dbTimerKey);
+    String time = formatTime.format(dbTimerKey);
+    DatabaseReference ref = FirebaseDatabase.instance.reference();
+
+    var data = {
+      "image":url,
+      "modelo":modelo,
+      "marca":marca,
+      "year":year,
+      "autoP":autoP,
+      "numeroA":numeroA,
+      "psalida":psalida,
+      "pactual":pactual,
+      "date":date,
+      "time":time
+    };
+  ref.child("Post").push().set(data);
+
+  }
+
+  bool validateandSave(){
+    final form = formkey.currentState;
+    if(form.validate()){
+      form.save();
+      return true;
+    }else{
+      return false;
+    }
   }
 
   void uploadImageFireStore() async{
