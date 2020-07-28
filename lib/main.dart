@@ -114,8 +114,11 @@ class _MyAppState extends State<MyApp> {
                             carpostList[index].time);
                       },
                     ),
-                  )),
-        floatingActionButton: StreamBuilder<Object>(
+                  )
+                  ),
+        floatingActionButton: isSignIn
+          ?
+         StreamBuilder<Object>(
             stream: null,
             builder: (context, snapshot) {
               return FloatingActionButton(
@@ -127,7 +130,14 @@ class _MyAppState extends State<MyApp> {
                 },
                 child: Icon(Icons.add),
               );
-            }),
+            })
+          :
+          FloatingActionButton.extended(
+            label: Text("Iniciar Sesion"),
+            icon: Icon(Icons.person),
+            onPressed: (){
+              handleSignIn();
+          })
       ),
     );
   }
