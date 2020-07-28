@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -122,6 +123,7 @@ class _CarinfoState extends State<Carinfo> {
                                   //TextFormfield comentario
                                   padding: EdgeInsets.all(10),
                                   child: TextFormField(
+                                    onSaved: (value) => _comentario = value,
                                     validator:(value){
                                         if(value.isEmpty){
                                           return "Ingrese un comentario antes!!";
@@ -140,7 +142,7 @@ class _CarinfoState extends State<Carinfo> {
                                   child: RaisedButton(
                                     child: Text("Publicar"),
                                     onPressed: (){
-                                      ComentarioToFireBase();
+                                      ComentarioToFireBase(keyPostRecibe);
                                     }
                                     ),
                                 )
@@ -174,18 +176,21 @@ bool validateandSave(){
   }
 
 
-  void ComentarioToFireBase(){
+  void ComentarioToFireBase(String keypost){
     if(validateandSave()){
     var dbTimerKey = DateTime.now();
     var formatDate = DateFormat('MMM d, yyyy');
     var formatTime = DateFormat('EEEE, hh:mm aaa');
     String date = formatDate.format(dbTimerKey);
     String time = formatTime.format(dbTimerKey);
-    
-
+    DatabaseReference ref = FirebaseDatabase.instance.reference();
+    var data ={
+      "date":date,
+      "time":time,
+      "comentario":_comentario,
+    };
+    ref.child("/Post/"+keypost+"").push().set(data);
     }
-    
-
 
   }
 

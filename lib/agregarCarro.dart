@@ -241,9 +241,6 @@ class _AgregarCarroState extends State<AgregarCarro> {
     }
   }
 
-  void uploadImageFireStore() async{
-
-  }
 
   Widget enableUpload(){
     return Container(
