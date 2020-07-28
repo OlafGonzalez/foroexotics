@@ -24,14 +24,15 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    DatabaseReference postReference = FirebaseDatabase.instance.reference().child("Post");
-    postReference.once().then((DataSnapshot snap){
+    DatabaseReference postReference =
+        FirebaseDatabase.instance.reference().child("Post");
+    postReference.once().then((DataSnapshot snap) {
       var keys = snap.value.keys;
       var data = snap.value;
 
       carpostList.clear();
-      
-      for(var individualKey in keys){
+
+      for (var individualKey in keys) {
         CarPost posts = CarPost(
           data[individualKey]['modelo'],
           data[individualKey]['marca'],
@@ -50,37 +51,70 @@ class _MyAppState extends State<MyApp> {
         print('Length: $carpostList.length');
       });
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.blueGrey,
       ),
       home: Scaffold(
+        backgroundColor: Colors.black,
         appBar: AppBar(
+          actions: <Widget>[
+            isSignIn
+                ? Container(
+                    width: 180,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(_user.photoUrl),
+                        ),
+                        Text(_user.displayName),
+                        IconButton(
+                          icon: Icon(Icons.exit_to_app),
+                          onPressed: () {
+                            googleSignout();
+                          },
+                        )
+                      ],
+                    ),
+                  )
+                : Container(
+                    width: 65,
+                    child: Row(
+                      children: <Widget>[
+                        IconButton(
+                            icon: Icon(Icons.person),
+                            onPressed: () {
+                              handleSignIn();
+                            }),
+                      ],
+                    ),
+                  )
+          ],
           title: Text("Foro"),
         ),
         body: Center(
-          child: carpostList.length == 0
-          ? Center(
-            child: Text("No existen post"),
-          )
-          : Center(
-            child: ListView.builder(
-              itemCount: carpostList.length,
-              itemBuilder: (_,index){
-                return postUI(
-                  carpostList[index].marca,
-                  carpostList[index].modelo,
-                  carpostList[index].imagen
-                );
-              },
-            ),
-          )
-        ),
+            child: carpostList.length == 0
+                ? Center(
+                    child: Text("No existen post"),
+                  )
+                : Center(
+                    child: ListView.builder(
+                      itemCount: carpostList.length,
+                      itemBuilder: (_, index) {
+                        return postUI(
+                            carpostList[index].marca,
+                            carpostList[index].modelo,
+                            carpostList[index].imagen,
+                            carpostList[index].date,
+                            carpostList[index].time);
+                      },
+                    ),
+                  )),
         floatingActionButton: StreamBuilder<Object>(
             stream: null,
             builder: (context, snapshot) {
@@ -98,21 +132,31 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Widget postUI(String marca,String modelo, String image){
+  Widget postUI(
+      String marca, String modelo, String image, String date, String time) {
     return Card(
-      elevation: 10.0,
+      elevation: 14.0,
+      color: Colors.grey,
       margin: EdgeInsets.all(14),
       child: Container(
-        padding: EdgeInsets.all(14),
+        padding: EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Row(
-              mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[Text(date), Text(time)],
+                ),
+                Image.network(
+                  image,
+                  fit: BoxFit.cover,
+                ),
                 Text(marca),
                 Text(modelo),
-                Image.network(image,fit: BoxFit.cover,)
+                RaisedButton(child: Text("info"), onPressed: () {}),
               ],
             )
           ],
