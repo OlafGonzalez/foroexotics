@@ -17,7 +17,9 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
+
 class _MyAppState extends State<MyApp> {
+
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser _user;
   GoogleSignIn _googleSignIn = new GoogleSignIn();
@@ -26,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     DatabaseReference postReference =
-        FirebaseDatabase.instance.reference().child("Post");
+    FirebaseDatabase.instance.reference().child("Post");
     postReference.once().then((DataSnapshot snap) {
       var keys = snap.value.keys;
       var data = snap.value;
@@ -50,7 +52,7 @@ class _MyAppState extends State<MyApp> {
         carpostList.add(posts);
       }
       setState(() {
-        print('Length: $carpostList.length');
+        //print('Length: $carpostList.length');
       });
     });
   }

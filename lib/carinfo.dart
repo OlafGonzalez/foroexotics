@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:foroexotics/Comentarios.dart';
 import 'package:intl/intl.dart';
 
 class Carinfo extends StatefulWidget {
@@ -48,7 +49,7 @@ class Carinfo extends StatefulWidget {
 class _CarinfoState extends State<Carinfo> {
   String _comentario;
   final formkey = GlobalKey<FormState>();
-
+  List<Comentarios> comentariosList = [];
   final String keyPostRecibe;
   final String marcaRecibe;
   final String modeloRecibe;
@@ -77,6 +78,25 @@ class _CarinfoState extends State<Carinfo> {
   @override
   void initState() {
     super.initState();
+    DatabaseReference postReference =
+        FirebaseDatabase.instance.reference().child("/comentarios/"+keyPostRecibe+"");
+        postReference.once().then((DataSnapshot snap) {
+          var keys = snap.value.keys;
+          var data = snap.value;
+          comentariosList.clear();
+
+          for(var comentsKeys in keys){
+            Comentarios comen = Comentarios(
+              data[comentsKeys]['date'],
+              data[comentsKeys]['time'],
+              data[comentsKeys]['comentario']
+            );
+            comentariosList.add(comen);
+          }
+          setState(() {
+            print('Length: $comentariosList.length');
+          });
+        });
   }
 
   @override
@@ -143,6 +163,7 @@ class _CarinfoState extends State<Carinfo> {
                                     child: Text("Publicar"),
                                     onPressed: (){
                                       ComentarioToFireBase(keyPostRecibe);
+                                      
                                     }
                                     ),
                                 )
@@ -151,19 +172,36 @@ class _CarinfoState extends State<Carinfo> {
                           ),
                         ),
                       ),
-                      Container(
-                        height: 300,
-                        width: 60,
-                        color: Colors.red,
-                      ),
+                      
                     ]
                   ),      
                   ),
+                  SliverList(delegate: SliverChildListDelegate(
+                    List.generate(comentariosList.length, (index){
+                      return cardComen(comentariosList[index].comentario, comentariosList[index].date, comentariosList[index].time);
+                    })))
               ],
             )
             )
             );
   }
+
+Widget cardComen(String comentario,String date,String time){
+  return Card(
+    elevation: 14.0,
+    color: Colors.white,
+    child: Container(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        children: <Widget>[
+          Text(comentario),
+          Text(date),
+          Text(time)
+        ],
+      ),
+    ),
+  );
+}
 
 bool validateandSave(){
     final form = formkey.currentState;
@@ -189,10 +227,7 @@ bool validateandSave(){
       "time":time,
       "comentario":_comentario,
     };
-    ref.child("/Post/"+keypost+"").push().set(data);
+    ref.child("/comentarios/"+keypost+"").push().set(data);
     }
-
   }
-
-
 }
