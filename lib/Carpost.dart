@@ -1,5 +1,7 @@
 class CarPost{
   String 
+  userName,
+  userImage,
   keyPost,
   modelo,
   marca,
@@ -12,6 +14,8 @@ class CarPost{
   time,
   date;
   CarPost(
+  this.userName,
+  this.userImage,
   this.keyPost,
   this.modelo,
   this.marca,

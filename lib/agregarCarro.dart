@@ -8,14 +8,25 @@ import 'package:intl/intl.dart';
 
 
 class AgregarCarro extends StatefulWidget {
+  final String usernameEnvio;
+  final String imageuserEnvio;
+
+  const AgregarCarro({
+  Key key, 
+  this.usernameEnvio, 
+  this.imageuserEnvio}) : super(key: key);
   @override
-  _AgregarCarroState createState() => _AgregarCarroState();
+  _AgregarCarroState createState() => _AgregarCarroState(usernameEnvio,imageuserEnvio);
 }
 
 class _AgregarCarroState extends State<AgregarCarro> {
+  final String usernameRecibe;
+  final String imageuserRecibe;
   File sampleImage;
   String modelo,marca,year,autoP,numeroA,psalida,pactual,url;
   final formkey = GlobalKey<FormState>();
+
+  _AgregarCarroState(this.usernameRecibe, this.imageuserRecibe);
 
   @override
   Widget build(BuildContext context) {
@@ -216,6 +227,8 @@ class _AgregarCarroState extends State<AgregarCarro> {
     DatabaseReference ref = FirebaseDatabase.instance.reference();
 
     var data = {
+      "userName":usernameRecibe,
+      "userImage":imageuserRecibe,
       "image":url,
       "modelo":modelo,
       "marca":marca,

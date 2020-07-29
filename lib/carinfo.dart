@@ -181,12 +181,10 @@ class _CarinfoState extends State<Carinfo> {
                           ),
                           Text("Precio de Salida: " + precioSalidaRecibe,
                               style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold)),
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
                           Text("Precio Actual: " + precioActualRecibe,
                               style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold)),
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
                           Text(
                               "No. de Auto " +
                                   numeroAutoRecibe +
