@@ -54,7 +54,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                     },
                     decoration: InputDecoration(
                         hintText: "Modelo",
-                        prefixIcon: Icon(Icons.card_travel),
+                        prefixIcon: Icon(Icons.time_to_leave),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15))),
                   ),
@@ -71,7 +71,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                     },
                     decoration: InputDecoration(
                         hintText: "Marca",
-                        prefixIcon: Icon(Icons.card_travel),
+                        prefixIcon: Icon(Icons.time_to_leave),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15))),
                   ),
@@ -87,7 +87,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                     },
                     decoration: InputDecoration(
                         hintText: "Ano",
-                        prefixIcon: Icon(Icons.card_travel),
+                        prefixIcon: Icon(Icons.calendar_today),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15))),
                   ),
@@ -103,7 +103,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                     },
                     decoration: InputDecoration(
                         hintText: "Autos producidos",
-                        prefixIcon: Icon(Icons.card_travel),
+                        prefixIcon: Icon(Icons.gavel),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15))),
                   ),
@@ -119,7 +119,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                     },
                     decoration: InputDecoration(
                         hintText: "Numero de auto",
-                        prefixIcon: Icon(Icons.card_travel),
+                        prefixIcon: Icon(Icons.directions_car),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15))),
                   ),
@@ -135,7 +135,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                     },
                     decoration: InputDecoration(
                         hintText: "Precio de salida",
-                        prefixIcon: Icon(Icons.card_travel),
+                        prefixIcon: Icon(Icons.attach_money),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15))),
                   ),
@@ -151,7 +151,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                     },
                     decoration: InputDecoration(
                         hintText: "Precio actual",
-                        prefixIcon: Icon(Icons.card_travel),
+                        prefixIcon: Icon(Icons.attach_money),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15))),
                   ),
@@ -167,21 +167,43 @@ class _AgregarCarroState extends State<AgregarCarro> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Container(
-                      width: 90,
+                      width: 150,
                       height: 40,
                       child: RaisedButton(
-                        child: Text("photo"),
+            
+                        shape: StadiumBorder(),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.camera_alt),
+                            Text("Subir Foto",style: TextStyle(
+                                    color: Colors.blueAccent, letterSpacing: 1.8),),
+                          ],
+                        ),
                         onPressed: (){
                           getImage();
                         }),
                     ),
                     Container(
-                      width: 90,
+                      width: 150,
                       height: 40,
                       child: RaisedButton(
-                        child: Text("Add"),
+                        shape: StadiumBorder(),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.file_upload),
+                            Text("Subir",style: TextStyle(
+                                    color: Colors.blueAccent, letterSpacing: 1.8),
+                                    ),
+                          ],
+                        ),
                         onPressed: (){
+                          if(sampleImage == null){
+                            _showDialog();
+                          }else{
                           uploadStatusImage();
+                          }
                       }),
                     )
                   ],
@@ -194,6 +216,28 @@ class _AgregarCarroState extends State<AgregarCarro> {
           ))
         ],
       )),
+    );
+  }
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("No se puede realizar esta accion"),
+          content: new Text("Agrege una imagen"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Cerrar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 

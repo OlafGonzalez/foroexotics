@@ -74,6 +74,7 @@ class _MyAppState extends State<MyApp> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           CircleAvatar(
+                            maxRadius: 16,
                             backgroundImage: NetworkImage(_user.photoUrl),
                           ),
                           Text(_user.displayName),
