@@ -140,17 +140,68 @@ class _CarinfoState extends State<Carinfo> {
               slivers: <Widget>[
                 SliverAppBar(
                   pinned: true,
+                  snap: false,
                   //title: Text(modeloRecibe),
-                  backgroundColor: Colors.grey,
-                  expandedHeight: 300,
+                  backgroundColor: Colors.black26,
+                  expandedHeight: 370,
                   flexibleSpace: FlexibleSpaceBar(
-                    title: Text(modeloRecibe),
+                    collapseMode: CollapseMode.parallax,
+                    title: Text(marcaRecibe + " " + modeloRecibe),
                     background: Image.network(
                       imagenRecibe,
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
+                SliverList(
+                    delegate: SliverChildListDelegate([
+                  Container(
+                    height: 220,
+                    padding: EdgeInsets.all(1),
+                    child: Card(
+                      elevation: 8,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text("Informacion",
+                              style: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.bold)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text("Marca:" + marcaRecibe,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
+                              Text("Modelo:" + modeloRecibe,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                          Text("Precio de Salida: " + precioSalidaRecibe,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold)),
+                          Text("Precio Actual: " + precioActualRecibe,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold)),
+                          Text(
+                              "No. de Auto " +
+                                  numeroAutoRecibe +
+                                  " de " +
+                                  autosproducidosRecibe,
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                          Text("Ano: " + yearRecibe,
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold))
+                        ],
+                      ),
+                    ),
+                  )
+                ])),
                 SliverList(
                   delegate: SliverChildListDelegate([
                     Container(
@@ -233,24 +284,19 @@ class _CarinfoState extends State<Carinfo> {
               children: <Widget>[
                 //UserName
                 Container(
-                  width:290 ,
-                  child: 
-                  Text(
+                  width: 290,
+                  child: Text(
                     userName,
                     textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold
-                    ),),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
                 ),
                 //Comentario
                 Container(
                   width: 290,
-                  child: Text(comentario,
-                  style: TextStyle(
-
-                    fontSize: 16
-                  ),
+                  child: Text(
+                    comentario,
+                    style: TextStyle(fontSize: 16),
                   ),
                 ),
                 Container(
@@ -259,21 +305,17 @@ class _CarinfoState extends State<Carinfo> {
 
                 Container(
                   width: 290,
-                  child: Text(date +" "+ time,
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold
-                  ),
+                  child: Text(
+                    date + " " + time,
+                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Container(
                   width: 290,
-                  child: Text("Sign in whit Google",
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold
-                  ),),
-                  
+                  child: Text(
+                    "Sign in whit Google",
+                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                  ),
                 )
               ],
             ),
