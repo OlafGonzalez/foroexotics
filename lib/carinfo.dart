@@ -4,6 +4,8 @@ import 'package:foroexotics/Comentarios.dart';
 import 'package:intl/intl.dart';
 
 class Carinfo extends StatefulWidget {
+  final String usernameEnvio;
+  final String imageuserEnvio;
   final String keyPostEnvio;
   final String marcaEnvio;
   final String modeloEnvio;
@@ -18,6 +20,8 @@ class Carinfo extends StatefulWidget {
 
   const Carinfo(
       {Key key,
+      this.usernameEnvio,
+      this.imageuserEnvio,
       this.keyPostEnvio,
       this.marcaEnvio,
       this.modeloEnvio,
@@ -33,6 +37,8 @@ class Carinfo extends StatefulWidget {
 
   @override
   _CarinfoState createState() => _CarinfoState(
+      usernameEnvio,
+      imageuserEnvio,
       keyPostEnvio,
       marcaEnvio,
       modeloEnvio,
@@ -50,6 +56,8 @@ class _CarinfoState extends State<Carinfo> {
   String _comentario;
   final formkey = GlobalKey<FormState>();
   List<Comentarios> comentariosList = [];
+  final String usernameRecibe;
+  final String imageuserRecibe;
   final String keyPostRecibe;
   final String marcaRecibe;
   final String modeloRecibe;
@@ -63,6 +71,8 @@ class _CarinfoState extends State<Carinfo> {
   final String numeroAutoRecibe;
 
   _CarinfoState(
+      this.usernameRecibe,
+      this.imageuserRecibe,
       this.keyPostRecibe,
       this.marcaRecibe,
       this.modeloRecibe,
@@ -89,7 +99,9 @@ class _CarinfoState extends State<Carinfo> {
             Comentarios comen = Comentarios(
               data[comentsKeys]['date'],
               data[comentsKeys]['time'],
-              data[comentsKeys]['comentario']
+              data[comentsKeys]['comentario'],
+              data[comentsKeys]['userNombre'],
+              data[comentsKeys]['userImagen']
             );
             comentariosList.add(comen);
           }
@@ -108,6 +120,20 @@ class _CarinfoState extends State<Carinfo> {
         home: Scaffold(
             backgroundColor: Colors.black,
             appBar: AppBar(  
+              actions: <Widget>[
+                Container(
+                    width: 180,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(imageuserRecibe),
+                        ),
+                        Text(usernameRecibe),
+                      ],
+                    ),
+                  )
+              ],
               title: Text("Info"),
             ),
             body: CustomScrollView(
@@ -162,8 +188,7 @@ class _CarinfoState extends State<Carinfo> {
                                   child: RaisedButton(
                                     child: Text("Publicar"),
                                     onPressed: (){
-                                      ComentarioToFireBase(keyPostRecibe);
-                                      
+                                      ComentarioToFireBase(keyPostRecibe);   
                                     }
                                     ),
                                 )
@@ -178,7 +203,12 @@ class _CarinfoState extends State<Carinfo> {
                   ),
                   SliverList(delegate: SliverChildListDelegate(
                     List.generate(comentariosList.length, (index){
-                      return cardComen(comentariosList[index].comentario, comentariosList[index].date, comentariosList[index].time);
+                      return cardComen(
+                        comentariosList[index].comentario, 
+                        comentariosList[index].date, 
+                        comentariosList[index].time,
+                        comentariosList[index].userName,
+                        comentariosList[index].userImage);
                     })))
               ],
             )
@@ -186,17 +216,15 @@ class _CarinfoState extends State<Carinfo> {
             );
   }
 
-Widget cardComen(String comentario,String date,String time){
+Widget cardComen(String comentario,String date,String time,String userName,String userImage){
   return Card(
     elevation: 14.0,
     color: Colors.white,
     child: Container(
       padding: EdgeInsets.all(10),
-      child: Column(
+      child: Row(
         children: <Widget>[
-          Text(comentario),
-          Text(date),
-          Text(time)
+          
         ],
       ),
     ),
@@ -226,6 +254,8 @@ bool validateandSave(){
       "date":date,
       "time":time,
       "comentario":_comentario,
+      "userNombre":usernameRecibe,
+      "userImagen":imageuserRecibe
     };
     ref.child("/comentarios/"+keypost+"").push().set(data);
     }

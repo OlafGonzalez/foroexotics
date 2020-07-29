@@ -186,6 +186,8 @@ class _MyAppState extends State<MyApp> {
                         Navigator.push(
                           context, 
                           MaterialPageRoute(builder: (context) =>Carinfo(
+                            usernameEnvio: _user.displayName,
+                            imageuserEnvio: _user.photoUrl,
                             keyPostEnvio: keyPost,
                             marcaEnvio: marca,
                             modeloEnvio: modelo,

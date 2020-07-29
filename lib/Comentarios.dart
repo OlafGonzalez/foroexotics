@@ -2,9 +2,15 @@ class Comentarios{
   String 
   date,
   time,
-  comentario;
+  comentario,
+  userName,
+  userImage
+  ;
   Comentarios(
     this.date,
     this.time,
-    this.comentario);
+    this.comentario,
+    this.userName,
+    this.userImage
+    );
 }
