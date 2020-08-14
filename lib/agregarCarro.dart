@@ -32,7 +32,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Agregar exotico"),
+        title: Text("Agregar exótico"),
       ),
       body: Center(
           child: ListView(
@@ -82,11 +82,11 @@ class _AgregarCarroState extends State<AgregarCarro> {
                     onSaved: (value) => year = value,
                     validator: (value){
                       if(value.isEmpty){
-                        return "Ingrese el ano";
+                        return "Ingrese el año";
                       }
                     },
                     decoration: InputDecoration(
-                        hintText: "Ano",
+                        hintText: "Año",
                         prefixIcon: Icon(Icons.calendar_today),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15))),
@@ -98,7 +98,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                     onSaved: (value) => autoP = value,
                     validator: (value){
                       if(value.isEmpty){
-                        return "Ingrese el numero de autos producidos";
+                        return "Ingrese el número de autos producidos";
                       }
                     },
                     decoration: InputDecoration(
@@ -118,7 +118,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                       }
                     },
                     decoration: InputDecoration(
-                        hintText: "Numero de auto",
+                        hintText: "Número de auto",
                         prefixIcon: Icon(Icons.directions_car),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15))),

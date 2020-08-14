@@ -104,7 +104,7 @@ class _MyAppState extends State<MyApp> {
                       ),
                     )
             ],
-            title: Text("Foro"),
+            title: Text("Exotics Cars"),
           ),
           body: Center(
               child: carpostList.length == 0
@@ -232,7 +232,7 @@ class _MyAppState extends State<MyApp> {
                       letterSpacing: 2),
                 ),
                 Text(
-                  "No." + autosproducidos + " de " + numeroAuto,
+                  "No." +numeroAuto  + " de " + autosproducidos,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -245,7 +245,9 @@ class _MyAppState extends State<MyApp> {
                           shape: StadiumBorder(),
                           child: Text(
                             "SPECS",
+                            
                             style: TextStyle(
+                              
                                 color: Colors.blueAccent, letterSpacing: 1.8),
                           ),
                           onPressed: () {

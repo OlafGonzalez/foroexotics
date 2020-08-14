@@ -134,7 +134,7 @@ class _CarinfoState extends State<Carinfo> {
                   ),
                 )
               ],
-              title: Text("Info"),
+              title: Text("SPECS"),
             ),
             body: CustomScrollView(
               slivers: <Widget>[
@@ -163,7 +163,7 @@ class _CarinfoState extends State<Carinfo> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text("Informacion",
+                          Text("Información",
                               style: TextStyle(
                                   fontSize: 22, fontWeight: FontWeight.bold)),
                           Row(
@@ -192,7 +192,7 @@ class _CarinfoState extends State<Carinfo> {
                                   autosproducidosRecibe,
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold)),
-                          Text("Ano: " + yearRecibe,
+                          Text("Año: " + yearRecibe,
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold))
                         ],
@@ -232,7 +232,10 @@ class _CarinfoState extends State<Carinfo> {
                                   )),
                               Container(
                                 child: RaisedButton(
-                                    child: Text("Publicar"),
+                                   shape: StadiumBorder(),
+                                    child: Text("Publicar",style: TextStyle(
+                                      
+                                color: Colors.blueAccent, letterSpacing: 1.8),),
                                     onPressed: () {
                                       ComentarioToFireBase(keyPostRecibe);
                                     }),
