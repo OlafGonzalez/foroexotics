@@ -12,7 +12,8 @@ class CarPost{
   precioActual,
   year,
   time,
-  date;
+  date,
+  ubicacion;
   CarPost(
   this.userName,
   this.userImage,
@@ -26,6 +27,7 @@ class CarPost{
   this.precioActual,
   this.year,
   this.time,
-  this.date);
+  this.date,
+  this.ubicacion);
 
 }

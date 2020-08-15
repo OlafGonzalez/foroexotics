@@ -5,6 +5,7 @@ import 'package:foroexotics/main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
+import 'package:geolocator/geolocator.dart';
 
 
 class AgregarCarro extends StatefulWidget {
@@ -23,10 +24,22 @@ class _AgregarCarroState extends State<AgregarCarro> {
   final String usernameRecibe;
   final String imageuserRecibe;
   File sampleImage;
-  String modelo,marca,year,autoP,numeroA,psalida,pactual,url;
+  String modelo,marca,year,autoP,numeroA,psalida,pactual,url,ubicacion;
   final formkey = GlobalKey<FormState>();
+  final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+  final myUbicacionController = TextEditingController();
+
+  Position _currentPosition;
+  String _currentAddress;
+  String result = '';
 
   _AgregarCarroState(this.usernameRecibe, this.imageuserRecibe);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,6 +170,24 @@ class _AgregarCarroState extends State<AgregarCarro> {
                   ),
                 ),
                 Container(
+                  padding: EdgeInsets.all(10),
+                  child: TextFormField(
+                    controller: myUbicacionController,
+                    //initialValue: _currentAddress,
+                    onSaved: (value) => ubicacion = value,
+                    validator: (value){
+                      if(value.isEmpty){
+                        return "Ingrese la direccion";
+                      }
+                    },
+                    decoration: InputDecoration(
+                        hintText: "Ubicacion",
+                        prefixIcon: Icon(Icons.map),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15))),
+                  ),
+                ),
+                Container(
                   padding:EdgeInsets.all(10),
                   child: sampleImage == null
                   ? Text("Sin imagen")
@@ -167,8 +198,7 @@ class _AgregarCarroState extends State<AgregarCarro> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Container(
-                      width: 150,
-                      height: 40,
+                      
                       child: RaisedButton(
             
                         shape: StadiumBorder(),
@@ -185,8 +215,24 @@ class _AgregarCarroState extends State<AgregarCarro> {
                         }),
                     ),
                     Container(
-                      width: 150,
-                      height: 40,
+                     
+                      child: RaisedButton(
+                        shape: StadiumBorder(),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.location_on),
+                            Text("Ubicación",style: TextStyle(
+                                    color: Colors.blueAccent, letterSpacing: 1.8),
+                                    ),
+                          ],
+                        ),
+                        onPressed: (){
+                           _getCurrentLocation();
+                      }),
+                    ),
+                    Container(
+                     
                       child: RaisedButton(
                         shape: StadiumBorder(),
                         child: Row(
@@ -205,7 +251,8 @@ class _AgregarCarroState extends State<AgregarCarro> {
                           uploadStatusImage();
                           }
                       }),
-                    )
+                    ),
+                    
                   ],
                 ),
                 Container(
@@ -239,6 +286,36 @@ class _AgregarCarroState extends State<AgregarCarro> {
         );
       },
     );
+  }
+ _getCurrentLocation() {
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+      });
+
+      _getAddressFromLatLng();
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  _getAddressFromLatLng() async {
+    try {
+      List<Placemark> p = await geolocator.placemarkFromCoordinates(
+          _currentPosition.latitude, _currentPosition.longitude);
+
+      Placemark place = p[0];
+
+      setState(() {
+        myUbicacionController.text =
+            "${place.locality}, ${place.subLocality}, ${place.country}";
+
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   void uploadStatusImage() async {
@@ -282,7 +359,8 @@ class _AgregarCarroState extends State<AgregarCarro> {
       "psalida":psalida,
       "pactual":pactual,
       "date":date,
-      "time":time
+      "time":time,
+      "ubicacion":ubicacion
     };
   ref.child("Post").push().set(data);
 

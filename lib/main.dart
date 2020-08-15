@@ -48,6 +48,7 @@ class _MyAppState extends State<MyApp> {
           data[individualKey]['year'],
           data[individualKey]['time'],
           data[individualKey]['date'],
+          data[individualKey]['ubicacion']
         );
         carpostList.add(posts);
       }
@@ -134,7 +135,8 @@ class _MyAppState extends State<MyApp> {
                               carpostList[index].precioActual,
                               carpostList[index].precioSalida,
                               carpostList[index].year,
-                              carpostList[index].numeroAuto);
+                              carpostList[index].numeroAuto,
+                              carpostList[index].ubicacion);
                         },
                       ),
                     )),
@@ -178,7 +180,8 @@ class _MyAppState extends State<MyApp> {
       String precioActual,
       String precioSalida,
       String year,
-      String numeroAuto) {
+      String numeroAuto,
+      String ubicacion) {
     return Card(
       elevation: 14.0,
       color: Colors.grey,
@@ -211,6 +214,10 @@ class _MyAppState extends State<MyApp> {
                         ),
                         Text(
                           time,
+                          style: TextStyle(fontSize: 10),
+                        ),
+                        if(ubicacion != null)Text(
+                          ubicacion,
                           style: TextStyle(fontSize: 10),
                         ),
                         Container(
